@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MAC Address Vendor Lookup</title>
+    <title>MAC Vendor Lookup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #222; color: white; }
-        .box { background: #333; padding: 30px; border-radius: 15px; width: 400px; margin: auto; box-shadow: 0 0 15px rgba(0,255,136,0.2); }
-        input, button { padding: 12px; margin: 10px; width: 85%; border-radius: 5px; border: none; font-size: 15px; }
-        button { background: #00ff88; color: black; font-weight: bold; cursor: pointer; }
-        .result { margin-top: 20px; padding: 15px; background: #444; border-radius: 8px; text-align: left; }
+        body { background: #0f0f0f; color: white; font-family: Arial; display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .box { background: #2a2a2a; padding: 30px; border-radius: 15px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 0 20px rgba(0,255,100,0.2); }
+        input { width: 90%; padding: 12px; border-radius: 8px; border: none; margin: 15px 0; }
+        button { width: 95%; padding: 12px; background: #00ff88; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 8px; background: #333; }
+        .success { color: #00ff88; font-size: 18px; }
+        .error { color: #ff5555; }
     </style>
 </head>
 <body>
     <div class="box">
-        <h1>🔍 MAC Vendor Lookup Tool</h1>
+        <h2>🔍 MAC Vendor Lookup Tool</h2>
         <p>Enter a MAC Address to find the manufacturer</p>
-        
         <form method="POST">
-            <input type="text" name="mac" placeholder="e.g., A4-CF-12-34-56-78" required>
+            <input type="text" name="mac" placeholder="e.g., A4-CF-12-34-56-78" value="{{ mac }}" required>
             <button type="submit">Lookup Vendor</button>
         </form>
 
-        {% if result %}
+        {% if vendor %}
         <div class="result">
-            {% if result.error %}
-                <p style="color:#ff6b6b">{{ result.error }}</p>
-            {% else %}
-                <h3>Result:</h3>
-                <p><b>MAC Address:</b> {{ result.mac }}</p>
-                <p><b>Vendor / Manufacturer:</b> {{ result.vendor }}</p>
-                <p><small>This shows the company that manufactured the device's network card.</small></p>
-            {% endif %}
+            <div class="success">✅ {{ vendor }}</div>
+            <small>MAC: {{ mac }}</small>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="result">
+            <div class="error">❌ {{ error }}</div>
         </div>
         {% endif %}
     </div>
